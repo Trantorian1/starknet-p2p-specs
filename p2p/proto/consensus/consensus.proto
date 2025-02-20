@@ -2,6 +2,7 @@ syntax = "proto3";
 
 import "p2p/proto/common.proto";
 import "p2p/proto/transaction.proto";
+import "p2p/proto/discovery.proto";
 
 option go_package = "github.com/starknet-io/starknet-p2pspecs/p2p/proto/consensus/consensus";
 
@@ -34,7 +35,7 @@ message Vote {
     // This is optional since a vote can be NIL.
     optional Hash proposal_commitment = 4;
     // Identifies the voter.
-    Address       voter               = 5;
+    MultiAddress  voter               = 5;
 }
 
 // Streaming of proposals is done on the "consensus_proposal" topic.
@@ -59,7 +60,7 @@ message ProposalInit {
     uint64          block_number = 1;
     uint32          round        = 2;
     optional uint32 valid_round  = 3;
-    Address         proposer     = 4;
+    MultiAddress    proposer     = 4;
 }
 
 // Identifies the content proposed (and executed). Consensus is reached on the value contained here.
@@ -85,7 +86,7 @@ message StreamMessage {
 message ProposalCommitment {
     uint64                 block_number                 = 1;
     Hash                   parent_commitment            = 2;
-    Address                builder                      = 3;
+    MultiAddress           builder                      = 3;
     uint64                 timestamp                    = 4;
     string                 protocol_version             = 5; // Starknet version
     // State root of block `H-K`, where `K` is defined by the protocol's version.
@@ -110,7 +111,7 @@ message ProposalCommitment {
 
 message BlockInfo {
     uint64                 block_number          = 1;
-    Address                builder               = 2;
+    MultiAddress           builder               = 2;
     uint64                 timestamp             = 3;
     Uint128                l2_gas_price_fri      = 4;
     Uint128                l1_gas_price_wei      = 5;
